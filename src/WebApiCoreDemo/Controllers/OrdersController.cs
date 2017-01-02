@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApiCoreDemo.Repository;
 using BookStore.Models;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApiCoreDemo.Controllers
 {
     [Route("api/[Controller]")]
+    [EnableCors("SiteCorsPolicy")]
     public class OrdersController : Controller
     {
         private IOrderRepository _repository;
@@ -36,14 +38,14 @@ namespace WebApiCoreDemo.Controllers
             return _repository.GetAllOrders();
         }
 
-        [HttpGet]
-        public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
-        {
-            if(withdetail)
-                return _repository.GetAllOrdersWithDetails(withdetail);
+        //[HttpGet]
+        //public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
+        //{
+        //    if(withdetail)
+        //        return _repository.GetAllOrdersWithDetails(withdetail);
 
-            return GetAllOrders();
-        }
+        //    return GetAllOrders();
+        //}
 
         [HttpPost]
         public IActionResult CreateOrder([FromBody] Order order)
@@ -54,7 +56,7 @@ namespace WebApiCoreDemo.Controllers
             }
 
             _repository.AddOrder(order);
-            return CreatedAtRoute("GetOrder", new { Controller = "Order", id = "Customer" }, order);
+            return CreatedAtRoute("GetOrder", new { Controller = "Orders", id = "Customer" }, order);
         }
     }
 }

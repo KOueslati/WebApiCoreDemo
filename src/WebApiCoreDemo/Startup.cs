@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using WebApiCoreDemo.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApiCoreDemo.Repository;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace WebApiCoreDemo
 {
@@ -35,6 +36,16 @@ namespace WebApiCoreDemo
             services.AddMvc();
             services.AddDbContext<WebApiCoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<IOrderRepository, OrderRepository>();
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +71,7 @@ namespace WebApiCoreDemo
             }
 
             app.UseStaticFiles();
-
+            app.UseCors("SiteCorsPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
