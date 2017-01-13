@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using WebApiCoreDemo.Repository;
 using BookStore.Models;
 using Microsoft.AspNetCore.Cors;
+<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations;
+=======
+>>>>>>> 1b739fc3cc11d7b2293da68b370ba51f34cf0894
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
