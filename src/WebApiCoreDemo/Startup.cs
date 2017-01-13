@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using WebApiCoreDemo.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApiCoreDemo.Repository;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using NetEscapades.AspNetCore.SecurityHeaders;
 
 namespace WebApiCoreDemo
 {
@@ -29,12 +31,24 @@ namespace WebApiCoreDemo
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) 
         {
             // Add framework services.
             services.AddMvc();
             services.AddDbContext<WebApiCoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<IOrderRepository, OrderRepository>();
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
+
+            services.AddCustomHeaders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,14 +74,21 @@ namespace WebApiCoreDemo
             }
 
             app.UseStaticFiles();
-
+            app.UseCors("SiteCorsPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
+            var policyCollection = new HeaderPolicyCollection()
+                .AddFrameOptionsSameOrigin()
+                .AddXssProtectionBlock()
+                .AddContentTypeOptionsNoSniff()
+                .AddCustomHeader("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';");
+
+            app.UseCustomHeadersMiddleware(policyCollection);        
         }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApiCoreDemo.Repository
 
         public Order GetOrder(int id)
         {
-            return _dbcontext.Orders.Include("OrderDetails.Book").FirstOrDefault(o => o.Id == id);
+            return _dbcontext.Orders.Include(o => o.OrderDetails).ThenInclude(d => d.Book).FirstOrDefault(o => o.Id == id);
         }
 
         public IQueryable<Order> GetAllOrders()
@@ -29,7 +29,7 @@ namespace WebApiCoreDemo.Repository
 
         public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
         {
-            return _dbcontext.Orders.Include("OrderDetails");
+            return _dbcontext.Orders.Include( o => o.OrderDetails);
         }
 
         public void AddOrder(Order order)
