@@ -30,7 +30,7 @@ namespace WebApiCoreDemo.Repository
         public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
         {
             if (withdetail)
-                return _dbcontext.Orders.Include( o => o.OrderDetails);
+                return _dbcontext.Orders.Include( o => o.OrderDetails).ThenInclude(b => b.Book);
 
             return GetAllOrders();
         }

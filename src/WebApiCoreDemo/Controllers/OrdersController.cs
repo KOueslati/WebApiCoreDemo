@@ -50,10 +50,10 @@ namespace WebApiCoreDemo.Controllers
             return _repository.GetAllOrders();
         }
 
-        //[HttpGet]
+        //[HttpGet("{withdetail}")]
         //public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
         //{
-        //    if(withdetail)
+        //    if (withdetail)
         //        return _repository.GetAllOrdersWithDetails(withdetail);
 
         //    return GetAllOrders();
