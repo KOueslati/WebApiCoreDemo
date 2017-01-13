@@ -50,14 +50,14 @@ namespace WebApiCoreDemo.Controllers
             return _repository.GetAllOrders();
         }
 
-        //[HttpGet("{withdetail}")]
-        //public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
-        //{
-        //    if (withdetail)
-        //        return _repository.GetAllOrdersWithDetails(withdetail);
+        [HttpGet("{withdetail}")]
+        public IQueryable<Order> GetAllOrdersWithDetails(bool withdetail)
+        {
+            if (withdetail)
+                return _repository.GetAllOrdersWithDetails(withdetail);
 
-        //    return GetAllOrders();
-        //}
+            return GetAllOrders();
+        }
 
         [HttpPost]
         public IActionResult CreateOrder([FromBody] Order order)
