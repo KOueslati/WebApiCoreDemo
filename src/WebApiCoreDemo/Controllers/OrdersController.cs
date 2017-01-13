@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using WebApiCoreDemo.Repository;
 using BookStore.Models;
 using Microsoft.AspNetCore.Cors;
-<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations;
-=======
->>>>>>> 1b739fc3cc11d7b2293da68b370ba51f34cf0894
+
+
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -69,7 +68,33 @@ namespace WebApiCoreDemo.Controllers
             }
 
             _repository.AddOrder(order);
-            return CreatedAtRoute("GetOrder", new { Controller = "Orders", id = "Customer" }, order);
+            return CreatedAtRoute("GetOrder", new { Controller = "Orders", id = order.Id }, order);
+        }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateOrder(int id, [FromBody]Order order)
+        {
+            var command = _repository.GetOrder(id);
+            if (command == null)
+                return NotFound(order);
+            else
+            {
+                _repository.UpdateOrder(order);
+                return NoContent();
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteOrder(int id)
+        {
+            var command = _repository.GetOrder(id);
+            if (command == null)
+                return NotFound();
+            else
+            {
+                _repository.RemoveOrder(command);
+                return Ok();
+            }
         }
     }
 }

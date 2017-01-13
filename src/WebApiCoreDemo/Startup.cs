@@ -12,10 +12,8 @@ using WebApiCoreDemo.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApiCoreDemo.Repository;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-<<<<<<< HEAD
 using NetEscapades.AspNetCore.SecurityHeaders;
-=======
->>>>>>> 1b739fc3cc11d7b2293da68b370ba51f34cf0894
+
 
 namespace WebApiCoreDemo
 {
@@ -50,11 +48,9 @@ namespace WebApiCoreDemo
             {
                 options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
             });
-<<<<<<< HEAD
+
 
             services.AddCustomHeaders();
-=======
->>>>>>> 1b739fc3cc11d7b2293da68b370ba51f34cf0894
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

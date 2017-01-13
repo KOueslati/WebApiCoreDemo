@@ -9,5 +9,7 @@ namespace WebApiCoreDemo.Repository
         IQueryable<Order> GetAllOrdersWithDetails(bool withdetail);
         Order GetOrder(int id);
         void AddOrder(Order order);
+        void UpdateOrder(Order order);
+        void RemoveOrder(Order order);
     }
 }
