@@ -7,6 +7,7 @@ using WebApiCoreDemo.Repository;
 using BookStore.Models;
 using Microsoft.AspNetCore.Cors;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -16,6 +17,7 @@ namespace WebApiCoreDemo.Controllers
 {
     [Route("api/[Controller]")]
     [EnableCors("SiteCorsPolicy")]
+    [Authorize]
     public class OrdersController : Controller
     {
         private IOrderRepository _repository;
@@ -44,6 +46,7 @@ namespace WebApiCoreDemo.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IQueryable<Order> GetAllOrders()
         {

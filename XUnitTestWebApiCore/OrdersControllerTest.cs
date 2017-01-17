@@ -32,6 +32,10 @@ namespace XUnitTestWebApiCore
                     Assert.NotNull((orderResult as Order).Id);
                     Assert.Equal((orderResult as Order).Customer, "khaled oueslati");
                 }
+                else
+                {
+                    Assert.True(result is BadRequestResult);
+                }
             }
         }
 
