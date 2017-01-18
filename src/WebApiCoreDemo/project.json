@@ -27,7 +27,8 @@
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.ResponseCompression": "1.0.0",
     "Microsoft.AspNetCore.Identity": "1.1.0",
-    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0"
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
+    "NetEscapades.AspNetCore.SecurityHeaders": "0.2.1"
   },
 
   "tools": {
